@@ -1,12 +1,12 @@
-﻿using System;
+﻿using HullBreakerCompany.Hull;
 using System.Collections.Generic;
-using HullBreakerCompany.Hull;
 
 namespace HullBreakerCompany.Events.Misc;
 
 public class NothingEvent : HullEvent
 {
-    public NothingEvent() {
+    public NothingEvent()
+    {
         ID = "Nothing";
         Weight = 100;
         Description = "Nothing happens - This event means there is no event.\nAdjust weight to set overall chance of getting an event vs. not getting an event for each time an event is randomly selected.";

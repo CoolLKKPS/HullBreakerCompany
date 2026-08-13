@@ -1,12 +1,12 @@
-﻿using System;
+﻿using HullBreakerCompany.Hull;
 using System.Collections.Generic;
-using HullBreakerCompany.Hull;
 
 namespace HullBreakerCompany.Events.Misc;
 
 public class TurretEvent : HullEvent
 {
-    public TurretEvent() {
+    public TurretEvent()
+    {
         ID = "Turret";
         Weight = 20;
         Description = "Spawns additional turrets inside.";
@@ -27,9 +27,12 @@ public class TurretEvent : HullEvent
     {
         if (!levelModifier.IsTrapUnitSpawnable(Util.getTrapUnitByType(typeof(Turret)))) return false;
         levelModifier.AddTrapUnit(Util.getTrapUnitByType(typeof(Turret)), Plugin.TurretScale);
-        if (Plugin.ColoredEventMessages) {
+        if (Plugin.ColoredEventMessages)
+        {
             HullManager.AddChatEventMessageColored(this, "red");
-        } else {
+        }
+        else
+        {
             HullManager.AddChatEventMessage(this);
         }
         return true;

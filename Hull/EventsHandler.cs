@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GameNetcodeStuff;
+using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using GameNetcodeStuff;
-using HarmonyLib;
 
 namespace HullBreakerCompany.Hull;
 
@@ -15,8 +15,9 @@ public abstract class EventsHandler
     public static bool BountyFirstKill;
     public static bool MeltdownActive;
     public static bool OnAPowderKegActive;
-    
-    public static void Reset() {
+
+    public static void Reset()
+    {
         Plugin.Mls.LogInfo($"Resetting EventsHandler variables.");
         BountyIsActive = false;
         BountyRewards = 0;
@@ -35,11 +36,13 @@ public abstract class EventsHandler
         Plugin.Mls.LogInfo($"Enemy killed, instance isHost: {RoundManager.Instance.IsHost}");
         if (!RoundManager.Instance.IsHost) return;
         Plugin.Mls.LogInfo($"Enemy killed, bounty is active: {BountyIsActive}; destroy is {destroy}");
-        if (BountyIsActive && !destroy) {
+        if (BountyIsActive && !destroy)
+        {
             int bountyReward = UnityEngine.Random.Range(Plugin.BountyRewardMin, Plugin.BountyRewardMax);
             BountyRewards++;
             // chat print reward. Detailed on 1st kill, abbreviated after
-            if (BountyFirstKill) {
+            if (BountyFirstKill)
+            {
                 // string building
                 List<String> rewardMessages = new() {
                     { "Threat neutralized! Keep up the good work. The company sends [AMOUNT] credits." },
@@ -50,11 +53,15 @@ public abstract class EventsHandler
                 rewardString.Replace("[AMOUNT]", "</color><color=green>" + bountyReward.ToString() + "</color><color=white>");
                 HullManager.SendChatEventMessage(rewardString.ToString());
                 BountyFirstKill = false;
-            } else if (Plugin.BountyRewardLimit > 0 && BountyRewards >= Plugin.BountyRewardLimit){
+            }
+            else if (Plugin.BountyRewardLimit > 0 && BountyRewards >= Plugin.BountyRewardLimit)
+            {
                 BountyIsActive = false;
-                bountyReward = (int) Math.Floor(Plugin.BountyRewardMax * 1.5f);
+                bountyReward = (int)Math.Floor(Plugin.BountyRewardMax * 1.5f);
                 Plugin.Mls.LogInfo("<color=white>Bounty complete! You receive </color><color=green>" + bountyReward + "</color><color=white> credits. Your handwork is invaluable to the company.");
-            } else {
+            }
+            else
+            {
                 HullManager.SendChatEventMessage("<color=white>Bounty reward: </color><color=green>" + bountyReward + "</color><color=white> credits</color>");
             }
             HullManager.Instance.AddMoney(bountyReward);

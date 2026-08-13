@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using HullBreakerCompany.Hull;
+﻿using HullBreakerCompany.Hull;
 using Random = UnityEngine.Random;
 
 
@@ -9,7 +6,8 @@ namespace HullBreakerCompany.Events.Misc;
 
 public class HullBreakEvent : HullEvent
 {
-    public HullBreakEvent() {
+    public HullBreakEvent()
+    {
         ID = "HullBreak";
         Weight = 10;
         Description = "The company sends a bonus payment. Take a break from stressfull events.";

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using HullBreakerCompany.Hull;
 using System.Collections.Generic;
-using System.Linq;
-using HullBreakerCompany.Hull;
 
 namespace HullBreakerCompany.Events.Scrap;
 
 public class BabkinPogrebEvent : HullEvent
 {
-    public BabkinPogrebEvent() {
+    public BabkinPogrebEvent()
+    {
         ID = "BabkinPogreb";
         Weight = 20;
         Description = "Spawns a lot of pickle jars.";
@@ -27,11 +26,14 @@ public class BabkinPogrebEvent : HullEvent
     public override bool Execute(SelectableLevel level, LevelModifier levelModifier)
     {
         string scrapToSpawn = "Jar of pickles";
-        if (levelModifier.IsScrapSpawnable(scrapToSpawn)) {
+        if (levelModifier.IsScrapSpawnable(scrapToSpawn))
+        {
             levelModifier.AddSpawnableScrapRarity(scrapToSpawn, 100);
             HullManager.AddChatEventMessage(this);
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }

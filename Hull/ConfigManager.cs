@@ -1,8 +1,8 @@
-﻿using BepInEx.Configuration;
+﻿using BepInEx;
+using BepInEx.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using BepInEx;
-using System;
 
 namespace HullBreakerCompany.Hull
 {
@@ -15,8 +15,9 @@ namespace HullBreakerCompany.Hull
             EnsureConfigExists();
             return _configFile.Bind(section, key, defaultValue, description).Value;
         }
-        
-        private static void SetConfigValue() {
+
+        private static void SetConfigValue()
+        {
             Plugin.EventCount = GetConfigValue("1 - Event Settings", "EventCount", 1, "Maximum number of active events. Less are possible depending on NothingEvent's weight.");
             Plugin.IncreaseEventCountPerDay = GetConfigValue("1 - Event Settings", "IncreaseEventCountPerDay", true, "Whether to increase EventCount by one for each day passed. Resets when a new quota begins.\nSetting this to \"true\" and EventCount to n will roll n events on the first day, n+1 on the second, ..");
 
@@ -28,13 +29,13 @@ namespace HullBreakerCompany.Hull
             Plugin.LandmineScale = GetConfigValue("1.2 - Event Configuration", "LandmineScale", 32, "The amount of additional landmines spawned by landmine event (there are more events that spawns mines and thus scale with the value set here)");
             Plugin.TurretScale = GetConfigValue("1.2 - Event Configuration", "TurretScale", 12, "The amount of additional turrets spawned by turret event");
             Plugin.SpikeTrapScale = GetConfigValue("1.2 - Event Configuration", "SpikeTrapScale", 12, "The amount of additional spike traps spawned by SpikeTrap event");
-            
+
             Plugin.BountyRewardMin = GetConfigValue("1.2 - Event Configuration", "BountyRewardMin", 20, "Minimum amount of credits rewarded for killing an enemy during EnemyBountyEvent");
             Plugin.BountyRewardMax = GetConfigValue("1.2 - Event Configuration", "BountyRewardMax", 70, "Maximum amount of credits rewarded for killing an enemy during EnemyBountyEvent");
             Plugin.BountyRewardLimit = GetConfigValue("1.2 - Event Configuration", "BountyRewardLimit", 10, "Limits the number of times you can get rewarded for kills during EnemyBountyEvent. Final reward will always pay `BountyRewardMax` * 1.5\nSet this to 0 for unlimited number of rewards.");
             Plugin.HullBreakEventCreditsMin = GetConfigValue("1.2 - Event Configuration", "HullBreakEventCreditsMin", 50, "Minimum amount of credits granted by HullBreakEvent");
             Plugin.HullBreakEventCreditsMax = GetConfigValue("1.2 - Event Configuration", "HullBreakEventCreditsMax", 200, "Maximum amount of credits granted by HullBreakEvent");
-            
+
             Plugin.LevelSettings = _configFile.Bind("2 - Level Settings", "LevelSettings", "vanilla",
                 new ConfigDescription("Specifies the settings to apply to every level by default\n" +
                 "These are baseline settings. Changes by events will always apply on top.\n" +
@@ -48,10 +49,11 @@ namespace HullBreakerCompany.Hull
             Plugin.MaxOutsideEnemyPowerCount = GetConfigValue("2.1 - Level Settings", "MaxOutsideEnemyPowerCount", 20, "Increase max outside enemy power count by this value (e.g. moutdog or forestgiant)");
             Plugin.MaxDaytimeEnemyPowerCount = GetConfigValue("2.1 - Level Settings", "MaxDaytimeEnemyPowerCount", 0, "Increase max daytime enemy power count by this value (e.g. bees)");
             Plugin.BunkerEnemyScale = GetConfigValue("2.1 - Level Settings", "Spawn curve override", 256, "Change spawn rate for inside enemies. A value of '256' will max out the amount of monsters spawned in each spawn wave starting as soon as you land.");
-            
+
         }
-        
-        public static void RefreshConfig() {
+
+        public static void RefreshConfig()
+        {
             Plugin.Mls.LogInfo("Refreshing config..");
             _configFile = null;
             SetConfigValue();
