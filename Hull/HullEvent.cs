@@ -13,27 +13,31 @@ public abstract class HullEvent
     public List<string> shortMessagesList = ["MESSAGE"];
     public virtual string GetID() => ID;
     public virtual int GetWeight() => Weight;
-    public virtual string GetDescription() => Description;
+    public virtual string GetDescription() => LocaleManager.GetDescription(ID) ?? Description;
+    protected List<string> GetActiveMessages() => LocaleManager.GetMessages(ID) ?? MessagesList;
+    protected List<string> GetActiveShortMessages() => LocaleManager.GetShortMessages(ID) ?? shortMessagesList;
     public virtual string GetMessage()
     {
+        List<string> messages = GetActiveMessages();
         if (Plugin.UniqueEventMessages)
         {
-            return MessagesList.Last();
+            return messages.Last();
         }
         else
         {
-            return MessagesList[UnityEngine.Random.Range(0, MessagesList.Count)];
+            return messages[UnityEngine.Random.Range(0, messages.Count)];
         }
     }
     public virtual string GetShortMessage()
     {
+        List<string> shortMessages = GetActiveShortMessages();
         if (Plugin.UniqueEventMessages)
         {
-            return shortMessagesList.Last();
+            return shortMessages.Last();
         }
         else
         {
-            return shortMessagesList[UnityEngine.Random.Range(0, shortMessagesList.Count)];
+            return shortMessages[UnityEngine.Random.Range(0, shortMessages.Count)];
         }
     }
     public virtual bool Execute(SelectableLevel level, LevelModifier levelModifier) { return true; }

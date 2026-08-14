@@ -106,11 +106,11 @@ public class HullManager : MonoBehaviour
         {
             if (Plugin.ColoredEventMessages)
             {
-                AddChatEventMessage("NOTES ABOUT MOON:", true);
+                AddChatEventMessage(LocaleManager.GetCommon("notesAboutMoon") ?? "NOTES ABOUT MOON:", true);
             }
             else
             {
-                AddChatEventMessage("<color=red>NOTES ABOUT MOON:</color>", true);
+                AddChatEventMessage("<color=red>" + (LocaleManager.GetCommon("notesAboutMoon") ?? "NOTES ABOUT MOON:") + "</color>", true);
             }
             foreach (string message in chatMessages)
             {

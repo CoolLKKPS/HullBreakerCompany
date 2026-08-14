@@ -23,11 +23,6 @@ public class BeeEvent : HullEvent
         };
     }
 
-    public override string GetID() => "Bee";
-    public override int GetWeight() => 20;
-    public override string GetDescription() => "Increases bee hive spawns outside";
-    public override string GetMessage() => MessagesList[UnityEngine.Random.Range(0, MessagesList.Count)];
-    public override string GetShortMessage() => shortMessagesList[UnityEngine.Random.Range(0, shortMessagesList.Count)];
     public override bool Execute(SelectableLevel level, LevelModifier levelModifier)
     {
         if (!levelModifier.IsDaytimeEnemySpawnable(Util.getEnemyByType(typeof(RedLocustBees))))

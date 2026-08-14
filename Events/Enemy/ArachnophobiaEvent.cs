@@ -22,8 +22,6 @@ public class ArachnophobiaEvent : HullEvent
             { "EIGHT LEGS" }
         };
     }
-    public override string GetMessage() => MessagesList[UnityEngine.Random.Range(0, MessagesList.Count)];
-    public override string GetShortMessage() => shortMessagesList[UnityEngine.Random.Range(0, shortMessagesList.Count)];
     public override bool Execute(SelectableLevel level, LevelModifier levelModifier)
     {
         if (!levelModifier.IsEnemySpawnable(Util.getEnemyByType(typeof(SandSpiderAI))))

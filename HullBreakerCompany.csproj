@@ -25,7 +25,12 @@
 		<PropertyGroup>
 			<CopyToDir>.\release\BepInEx\plugins\</CopyToDir>
 		</PropertyGroup>
+		<ItemGroup>
+			<LocaleFiles Include="Languages\*.json" />
+		</ItemGroup>
 		<Copy SourceFiles="$(TargetDir)$(ProjectName).dll" DestinationFiles="$(CopyToDir)\$(ProjectName).dll" />
+		<MakeDir Directories="$(CopyToDir)\Languages\" />
+		<Copy SourceFiles="@(LocaleFiles)" DestinationFolder="$(CopyToDir)\Languages\" />
 		<Message Text="Copied assembly to $(CopyToDir)" Importance="High" />
 	</Target>
 
@@ -52,6 +57,9 @@
         </Reference>
 		<Reference Include="FacilityMeltdown">
 			<HintPath>D:\Runtime dependencies (local)\BepInEx\plugins\loaforc-FacilityMeltdown\FacilityMeltdown\FacilityMeltdown.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>D:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Newtonsoft.Json.dll</HintPath>
 		</Reference>
     </ItemGroup>
 </Project>

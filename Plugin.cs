@@ -26,6 +26,8 @@ namespace HullBreakerCompany
         public static bool UseVanillaGameSettings;
         public static string LevelSettings;
 
+        public static string Language;
+
         public static int MaxEnemyPowerCount;
         public static int MaxOutsideEnemyPowerCount;
         public static int MaxDaytimeEnemyPowerCount;

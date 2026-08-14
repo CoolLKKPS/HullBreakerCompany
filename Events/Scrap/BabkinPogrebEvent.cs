@@ -20,8 +20,6 @@ public class BabkinPogrebEvent : HullEvent
             { "QUITE A PICKLE" }
         };
     }
-    public override string GetMessage() => MessagesList[UnityEngine.Random.Range(0, MessagesList.Count)];
-    public override string GetShortMessage() => shortMessagesList[UnityEngine.Random.Range(0, shortMessagesList.Count)];
     public static List<SpawnableItemWithRarity> scrapList = new();
     public override bool Execute(SelectableLevel level, LevelModifier levelModifier)
     {

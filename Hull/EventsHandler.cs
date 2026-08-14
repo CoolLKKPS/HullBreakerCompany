@@ -44,13 +44,13 @@ public abstract class EventsHandler
             if (BountyFirstKill)
             {
                 // string building
-                List<String> rewardMessages = new() {
-                    { "Threat neutralized! Keep up the good work. The company sends [AMOUNT] credits." },
-                    { "Enemy killed! Your work keeps the company happy. You receive [AMOUNT] credits." },
-                    { "Monster killed! The company values your commitment. [AMOUNT] credits received." },
+                List<String> rewardMessages = LocaleManager.GetKillMessages("EnemyBounty") ?? new() {
+                    { "Threat neutralized! Keep up the good work. The company sends {amount} credits." },
+                    { "Enemy killed! Your work keeps the company happy. You receive {amount} credits." },
+                    { "Monster killed! The company values your commitment. {amount} credits received." },
                 };
                 StringBuilder rewardString = new("<color=white>" + rewardMessages[UnityEngine.Random.Range(0, rewardMessages.Count)] + "</color>");
-                rewardString.Replace("[AMOUNT]", "</color><color=green>" + bountyReward.ToString() + "</color><color=white>");
+                rewardString.Replace("{amount}", "</color><color=green>" + bountyReward.ToString() + "</color><color=white>");
                 HullManager.SendChatEventMessage(rewardString.ToString());
                 BountyFirstKill = false;
             }
@@ -62,7 +62,9 @@ public abstract class EventsHandler
             }
             else
             {
-                HullManager.SendChatEventMessage("<color=white>Bounty reward: </color><color=green>" + bountyReward + "</color><color=white> credits</color>");
+                string rewardMessage = LocaleManager.Get("events.EnemyBounty.rewardMessage") ?? "Bounty reward: {amount} credits";
+                rewardMessage = rewardMessage.Replace("{amount}", "</color><color=green>" + bountyReward + "</color><color=white>");
+                HullManager.SendChatEventMessage("<color=white>" + rewardMessage + "</color>");
             }
             HullManager.Instance.AddMoney(bountyReward);
             Plugin.Mls.LogInfo($"Bounty credits rewarded: {bountyReward}");
@@ -85,7 +87,7 @@ public abstract class EventsHandler
         HullManager.Instance.timeOfDay.votedShipToLeaveEarlyThisRound = true;
         HullManager.Instance.timeOfDay.SetShipLeaveEarlyServerRpc();
 
-        HullManager.SendChatEventMessage(
-            "<color=red>Employee signal lost! Ship will leave in two hours!</color>");
+        string deathMessage = LocaleManager.Get("events.OneForAll.deathMessage") ?? "Employee signal lost! Ship will leave in two hours!";
+        HullManager.SendChatEventMessage("<color=red>" + deathMessage + "</color>");
     }
 }

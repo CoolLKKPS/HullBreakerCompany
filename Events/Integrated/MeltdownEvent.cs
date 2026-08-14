@@ -24,8 +24,6 @@ public class MeltdownEvent : HullEvent
     }
     public int dayInSeconds;
     public int currentDaysLeft;
-    public override string GetMessage() => MessagesList[UnityEngine.Random.Range(0, MessagesList.Count)];
-    public override string GetShortMessage() => shortMessagesList[UnityEngine.Random.Range(0, shortMessagesList.Count)];
     public override bool Execute(SelectableLevel level, LevelModifier levelModifier)
     {
         currentDaysLeft = TimeOfDay.Instance.daysUntilDeadline;
@@ -55,6 +53,7 @@ public class MeltdownEvent : HullEvent
         }
         Plugin.Mls.LogInfo(GetID() + $" Event: Meltdown initiated");
         MeltdownAPI.StartMeltdown(MyPluginInfo.PLUGIN_GUID);
-        HullManager.SendChatEventMessage("<color=red>NUCLEAR MELTDOWN! ABANDON MISSION!</color>");
+        string warningMessage = LocaleManager.Get("events.Meltdown.warningMessage") ?? "NUCLEAR MELTDOWN! ABANDON MISSION!";
+        HullManager.SendChatEventMessage("<color=red>" + warningMessage + "</color>");
     }
 }

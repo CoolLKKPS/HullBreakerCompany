@@ -17,8 +17,8 @@ public class NothingEvent : HullEvent
             { "<color=white>   </color>" }
         };
     }
-    public override string GetMessage() => MessagesList[UnityEngine.Random.Range(0, MessagesList.Count)];
-    public override string GetShortMessage() => MessagesList[UnityEngine.Random.Range(0, MessagesList.Count)];
+    public override string GetMessage() => GetActiveMessages()[UnityEngine.Random.Range(0, GetActiveMessages().Count)];
+    public override string GetShortMessage() => GetActiveMessages()[UnityEngine.Random.Range(0, GetActiveMessages().Count)];
     public override bool Execute(SelectableLevel level, LevelModifier levelModifier)
     {
         // simply omit the message
