@@ -44,7 +44,7 @@ public abstract class EventsHandler
             if (BountyFirstKill)
             {
                 // string building
-                List<String> rewardMessages = LocaleManager.GetKillMessages("EnemyBounty") ?? new() {
+                List<string> rewardMessages = LocaleManager.GetKillMessages("EnemyBounty") ?? new() {
                     { "Threat neutralized! Keep up the good work. The company sends {amount} credits." },
                     { "Enemy killed! Your work keeps the company happy. You receive {amount} credits." },
                     { "Monster killed! The company values your commitment. {amount} credits received." },

@@ -42,6 +42,7 @@ public class CustomEvent : HullEvent
     public override string GetMessage()
     {
         List<string> messages = LocaleManager.GetMessages(GetID()) ?? MessageList;
+        if (messages.Count == 0) return "";
         return "<color=white>" + messages[UnityEngine.Random.Range(0, messages.Count)] + "</color>";
     }
     public string GetReadableMessages()
@@ -52,6 +53,7 @@ public class CustomEvent : HullEvent
     public override string GetShortMessage()
     {
         List<string> shortMessages = LocaleManager.GetShortMessages(GetID()) ?? ShortMessageList;
+        if (shortMessages.Count == 0) return "";
         return "<color=white>" + shortMessages[UnityEngine.Random.Range(0, shortMessages.Count)] + "</color>";
     }
     public string GetReadableShortMessage()

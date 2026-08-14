@@ -16,72 +16,79 @@ public class CustomEventLoader
 
         foreach (var hullEventData in customEventData)
         {
-            // Building custom event from custom config event data
-            CustomEvent customEvent = new CustomEvent();
-            customEvent.SetID(hullEventData["EventID"]);
-            customEvent.SetWeight(int.Parse(hullEventData["EventWeight"]));
-            foreach (var msg in ParseMessages(hullEventData["InGameMessage"]))
+            try
             {
-                customEvent.AddMessage(msg);
-            }
-            foreach (var msg in ParseMessages(hullEventData["InGameShortMessage"]))
-            {
-                customEvent.AddShortMessage(msg);
-            }
-            if (hullEventData.ContainsKey("SpawnableEnemies"))
-            {
-                //customEvent.EnemySpawnList = new HashSet<string>(hullEvent["SpawnableEnemies"].Split(',')).ToList();
-                Plugin.Mls.LogDebug($"SpawnableEnemies defined. Parsing..");
-                customEvent.EnemySpawnList = ParseEnemies(hullEventData["SpawnableEnemies"]);
-            }
-            if (hullEventData.ContainsKey("SpawnableOutsideEnemies"))
-            {
-                Plugin.Mls.LogDebug($"SpawnableOutsideEnemies defined. Parsing..");
-                customEvent.OutsideEnemySpawnList = ParseEnemies(hullEventData["SpawnableOutsideEnemies"]);
-            }
-            if (hullEventData.ContainsKey("SpawnableDaytimeEnemies"))
-            {
-                Plugin.Mls.LogDebug($"SpawnableDaytimeEnemies defined. Parsing..");
-                customEvent.DaytimeEnemySpawnList = ParseEnemies(hullEventData["SpawnableDaytimeEnemies"]);
-            }
-            if (hullEventData.ContainsKey("SpawnableScrap"))
-            {
-                Plugin.Mls.LogDebug($"SpawnableScrap defined. Parsing..");
-                customEvent.ScrapSpawnList = ParseScrap(hullEventData["SpawnableScrap"]);
-            }
-            if (hullEventData.ContainsKey("GlobalPowerIncrease"))
-            {
-                Plugin.Mls.LogDebug($"GlobalPowerIncrease defined. Parsing..");
-                customEvent.addPower = int.Parse(hullEventData["GlobalPowerIncrease"]);
-            }
-            if (hullEventData.ContainsKey("GlobalOutsidePowerIncrease"))
-            {
-                Plugin.Mls.LogDebug($"GlobalOutsidePowerIncrease defined. Parsing..");
-                customEvent.addOutsidePower = int.Parse(hullEventData["GlobalOutsidePowerIncrease"]);
-            }
-            if (hullEventData.ContainsKey("GlobalDaytimePowerIncrease"))
-            {
-                Plugin.Mls.LogDebug($"GlobalDaytimePowerIncrease defined. Parsing..");
-                customEvent.addDaytimePower = int.Parse(hullEventData["GlobalDaytimePowerIncrease"]);
-            }
-            if (hullEventData.ContainsKey("GlobalInsideSpawnRateOverride"))
-            {
-                Plugin.Mls.LogDebug($"GlobalInsideSpawnRateOverride defined. Parsing..");
-                customEvent.overrideSpawnRate = int.Parse(hullEventData["GlobalInsideSpawnRateOverride"]);
-            }
-            if (hullEventData.ContainsKey("GlobalOutsideSpawnRateOverride"))
-            {
-                Plugin.Mls.LogDebug($"GlobalOutsideSpawnRateOverride defined. Parsing..");
-                customEvent.overrideOutsideSpawnRate = int.Parse(hullEventData["GlobalOutsideSpawnRateOverride"]);
-            }
-            if (hullEventData.ContainsKey("GlobalDaytimeSpawnRateOverride"))
-            {
-                Plugin.Mls.LogDebug($"GlobalDaytimeSpawnRateOverride defined. Parsing..");
-                customEvent.overrideDaytimeSpawnRate = int.Parse(hullEventData["GlobalDaytimeSpawnRateOverride"]);
-            }
+                // Building custom event from custom config event data
+                CustomEvent customEvent = new CustomEvent();
+                customEvent.SetID(hullEventData["EventID"]);
+                customEvent.SetWeight(int.Parse(hullEventData["EventWeight"]));
+                foreach (var msg in ParseMessages(hullEventData["InGameMessage"]))
+                {
+                    customEvent.AddMessage(msg);
+                }
+                foreach (var msg in ParseMessages(hullEventData["InGameShortMessage"]))
+                {
+                    customEvent.AddShortMessage(msg);
+                }
+                if (hullEventData.ContainsKey("SpawnableEnemies"))
+                {
+                    //customEvent.EnemySpawnList = new HashSet<string>(hullEvent["SpawnableEnemies"].Split(',')).ToList();
+                    Plugin.Mls.LogDebug($"SpawnableEnemies defined. Parsing..");
+                    customEvent.EnemySpawnList = ParseEnemies(hullEventData["SpawnableEnemies"]);
+                }
+                if (hullEventData.ContainsKey("SpawnableOutsideEnemies"))
+                {
+                    Plugin.Mls.LogDebug($"SpawnableOutsideEnemies defined. Parsing..");
+                    customEvent.OutsideEnemySpawnList = ParseEnemies(hullEventData["SpawnableOutsideEnemies"]);
+                }
+                if (hullEventData.ContainsKey("SpawnableDaytimeEnemies"))
+                {
+                    Plugin.Mls.LogDebug($"SpawnableDaytimeEnemies defined. Parsing..");
+                    customEvent.DaytimeEnemySpawnList = ParseEnemies(hullEventData["SpawnableDaytimeEnemies"]);
+                }
+                if (hullEventData.ContainsKey("SpawnableScrap"))
+                {
+                    Plugin.Mls.LogDebug($"SpawnableScrap defined. Parsing..");
+                    customEvent.ScrapSpawnList = ParseScrap(hullEventData["SpawnableScrap"]);
+                }
+                if (hullEventData.ContainsKey("GlobalPowerIncrease"))
+                {
+                    Plugin.Mls.LogDebug($"GlobalPowerIncrease defined. Parsing..");
+                    customEvent.addPower = int.Parse(hullEventData["GlobalPowerIncrease"]);
+                }
+                if (hullEventData.ContainsKey("GlobalOutsidePowerIncrease"))
+                {
+                    Plugin.Mls.LogDebug($"GlobalOutsidePowerIncrease defined. Parsing..");
+                    customEvent.addOutsidePower = int.Parse(hullEventData["GlobalOutsidePowerIncrease"]);
+                }
+                if (hullEventData.ContainsKey("GlobalDaytimePowerIncrease"))
+                {
+                    Plugin.Mls.LogDebug($"GlobalDaytimePowerIncrease defined. Parsing..");
+                    customEvent.addDaytimePower = int.Parse(hullEventData["GlobalDaytimePowerIncrease"]);
+                }
+                if (hullEventData.ContainsKey("GlobalInsideSpawnRateOverride"))
+                {
+                    Plugin.Mls.LogDebug($"GlobalInsideSpawnRateOverride defined. Parsing..");
+                    customEvent.overrideSpawnRate = int.Parse(hullEventData["GlobalInsideSpawnRateOverride"]);
+                }
+                if (hullEventData.ContainsKey("GlobalOutsideSpawnRateOverride"))
+                {
+                    Plugin.Mls.LogDebug($"GlobalOutsideSpawnRateOverride defined. Parsing..");
+                    customEvent.overrideOutsideSpawnRate = int.Parse(hullEventData["GlobalOutsideSpawnRateOverride"]);
+                }
+                if (hullEventData.ContainsKey("GlobalDaytimeSpawnRateOverride"))
+                {
+                    Plugin.Mls.LogDebug($"GlobalDaytimeSpawnRateOverride defined. Parsing..");
+                    customEvent.overrideDaytimeSpawnRate = int.Parse(hullEventData["GlobalDaytimeSpawnRateOverride"]);
+                }
 
-            // Register and enable the custom event
-            AddEvent(customEvent);
+                // Register and enable the custom event
+                AddEvent(customEvent);
+            }
+            catch (Exception e)
+            {
+                Plugin.Mls.LogWarning($"Failed to load custom event config: {e.Message}. Skipping this event.");
+            }
         }
     }
 

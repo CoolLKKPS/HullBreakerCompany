@@ -65,6 +65,7 @@ public class HullManager : MonoBehaviour
                 ? hullEvent.GetShortMessage()
                 : hullEvent.GetMessage();
         }
+        if (string.IsNullOrWhiteSpace(msg)) return;
         chatMessages.Add("<color=white>" + msg + "</color>");
     }
     public static void AddChatEventMessageColored(HullEvent hullEvent, string color = "white")
@@ -76,6 +77,7 @@ public class HullManager : MonoBehaviour
                 ? hullEvent.GetShortMessage()
                 : hullEvent.GetMessage();
         }
+        if (string.IsNullOrWhiteSpace(msg)) return;
         chatMessages.Add("<color=" + color + ">" + msg + "</color>");
 
     }

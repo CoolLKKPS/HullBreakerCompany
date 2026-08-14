@@ -9,6 +9,8 @@ public static class LocaleManager
 {
     private static Dictionary<string, string> _localeData;
     private static string _loadedLanguage;
+    private static string _missingLanguageWarning;
+    private static string _parseErrorLanguage;
 
     private static string CurrentLanguage => Plugin.Language ?? "en";
 
@@ -21,7 +23,15 @@ public static class LocaleManager
         _loadedLanguage = CurrentLanguage;
 
         string path = Path.Combine(PluginLocaleDir, CurrentLanguage + ".json");
-        if (!File.Exists(path)) return;
+        if (!File.Exists(path))
+        {
+            if (!CurrentLanguage.Equals("en", StringComparison.OrdinalIgnoreCase) && _missingLanguageWarning != CurrentLanguage)
+            {
+                Plugin.Mls.LogWarning($"Language package '{CurrentLanguage}.json' not found in {PluginLocaleDir}. Falling back to English.");
+                _missingLanguageWarning = CurrentLanguage;
+            }
+            return;
+        }
         try
         {
             JObject parsed = JObject.Parse(File.ReadAllText(path));
@@ -34,7 +44,11 @@ public static class LocaleManager
         }
         catch (Exception e)
         {
-            Plugin.Mls.LogError($"Failed to parse locale file {path}: {e.Message}");
+            if (_parseErrorLanguage != CurrentLanguage)
+            {
+                Plugin.Mls.LogError($"Failed to parse locale file {path}: {e.Message}");
+                _parseErrorLanguage = CurrentLanguage;
+            }
         }
     }
 
