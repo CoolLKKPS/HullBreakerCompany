@@ -1,9 +1,7 @@
-using BepInEx;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace HullBreakerCompany.Hull;
 
@@ -16,36 +14,28 @@ public static class LocaleManager
 
     private static string PluginLocaleDir => Path.Combine(Path.GetDirectoryName(typeof(Plugin).Assembly.Location), "Languages");
 
-    private static string ConfigLocaleDir => Path.Combine(Paths.ConfigPath, "HullBreakerCompany", "Languages");
-
     private static void EnsureLoaded()
     {
         if (_localeData != null && _loadedLanguage == CurrentLanguage) return;
         _localeData = null;
         _loadedLanguage = CurrentLanguage;
 
-        foreach (string path in GetLocaleFilePaths(CurrentLanguage + ".json"))
+        string path = Path.Combine(PluginLocaleDir, CurrentLanguage + ".json");
+        if (!File.Exists(path)) return;
+        try
         {
-            try
+            JObject parsed = JObject.Parse(File.ReadAllText(path));
+            _localeData = new Dictionary<string, string>();
+            foreach (var pair in Flatten(parsed))
             {
-                JObject parsed = JObject.Parse(File.ReadAllText(path));
-                _localeData ??= new Dictionary<string, string>();
-                foreach (var pair in Flatten(parsed))
-                {
-                    _localeData[pair.Key] = pair.Value;
-                }
-                Plugin.Mls.LogDebug($"Loaded locale file: {path}");
+                _localeData[pair.Key] = pair.Value;
             }
-            catch (Exception e)
-            {
-                Plugin.Mls.LogError($"Failed to parse locale file {path}: {e.Message}");
-            }
+            Plugin.Mls.LogDebug($"Loaded locale file: {path}");
         }
-    }
-
-    private static IEnumerable<string> GetLocaleFilePaths(string fileName)
-    {
-        return new[] { Path.Combine(PluginLocaleDir, fileName), Path.Combine(ConfigLocaleDir, fileName) }.Where(File.Exists);
+        catch (Exception e)
+        {
+            Plugin.Mls.LogError($"Failed to parse locale file {path}: {e.Message}");
+        }
     }
 
     private static Dictionary<string, string> Flatten(JToken root)
